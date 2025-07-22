@@ -12,6 +12,9 @@ public class ExporterConfiguration {
 
   private String enabledValueTypes = "";
   private String enabledRecordTypes = "";
+  private String enabledTenants = "";
+
+  private boolean enableTenantStreams = false;
 
   private String name = "zeebe";
 
@@ -98,6 +101,16 @@ public class ExporterConfiguration {
 
   public String getEnabledRecordTypes() {
     return getEnv("ENABLED_RECORD_TYPES").orElse(enabledRecordTypes);
+  }
+
+  // FIXME: Implement in RecordFilter.java
+  public String getEnabledTenants() {
+    return getEnv("ENABLED_TENANTS").orElse(enabledTenants);
+  }
+
+  public boolean isEnableTenantStreams() {
+    return getEnv("ENABLE_TENANT_STREAMS").map(Boolean::parseBoolean).orElse(enableTenantStreams);
+    // return getEnabledTenants().isEmpty() || getEnabledTenants().contains(tenant);
   }
 
   public String getName() {
