@@ -41,7 +41,6 @@ public final class RecordFilter implements Context.RecordFilter {
     return Arrays.stream(list.split(","))
         .map(String::trim)
         .filter(item -> !item.isEmpty())
-        .map(String::toUpperCase)
         .collect(Collectors.toList());
   }
 
@@ -60,6 +59,6 @@ public final class RecordFilter implements Context.RecordFilter {
       return false;
     }
     final String tenantId = tenantOwnedRecord.getTenantId();
-    return enabledTenants.isEmpty() || enabledTenants.contains(tenantId.toUpperCase());
+    return enabledTenants.isEmpty() || enabledTenants.contains(tenantId);
   }
 }
