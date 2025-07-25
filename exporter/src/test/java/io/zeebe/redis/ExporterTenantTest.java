@@ -60,7 +60,7 @@ public class ExporterTenantTest {
     testContext.setMultitenancyEnabled(true);
     testContext.setTenantStreamsEnabled(true);
 
-    testContainerUtil.startIdentity(testContext, "8.6.9", testContext.isMultitenancyEnabled());
+    testContainerUtil.startIdentity(testContext, "8.7.4", testContext.isMultitenancyEnabled());
   }
 
   @BeforeEach
@@ -77,7 +77,7 @@ public class ExporterTenantTest {
   private void startUpZeebeWithRedisExporter() {
     // final String zeebeVersion =
     // ContainerVersionsUtil.readProperty(ZEEBE_CURRENTVERSION_DOCKER_PROPERTY_NAME);
-    testContainerUtil.startZeebe("8.6.12", testContext);
+    testContainerUtil.startZeebe("8.7.8-2.0.1-SNAPSHOT", testContext);
     final ZeebeClient client = testContext.getZeebeClientBuilder().build();
     testContext.setZeebeClient(client);
 
@@ -101,6 +101,7 @@ public class ExporterTenantTest {
 
   @Test
   public void shouldExportUserTaskEventsWithTenant() throws Exception {
+    testContext.setTenantStreamsEnabled(true);
     testContext.setEnabledTenants(TENANT_1); // any Tenant
     startUpZeebeWithRedisExporter();
     // given

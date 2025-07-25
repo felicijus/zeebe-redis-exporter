@@ -57,13 +57,7 @@ public class RecordFilterTest {
   }
 
   @Test
-  public void testAcceptTenantWithNullValue() {
-    // Test null handling
-    assertFalse(recordFilter.acceptTenant(null));
-  }
-
-  @Test
-  public void testEmptyConfigurationAcceptsAll() {
+  public void testEmptyConfigurationAcceptsDefault() {
     // Test with empty configuration - should accept all types
     TestExporterConfiguration emptyConfig = new TestExporterConfiguration();
     emptyConfig.setEnabledRecordTypes("");
@@ -83,8 +77,8 @@ public class RecordFilterTest {
     assertTrue(emptyFilter.acceptValue(ValueType.JOB));
     assertTrue(emptyFilter.acceptValue(ValueType.VARIABLE));
 
-    // Should accept all tenants when configuration is empty
-    assertTrue(emptyFilter.acceptTenant(createTenantOwned("anyTenant")));
+    // Should accept default tenants when configuration is empty
+    assertTrue(emptyFilter.acceptTenant(createTenantOwned(TenantOwned.DEFAULT_TENANT_IDENTIFIER)));
   }
 
   @Test

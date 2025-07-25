@@ -5,6 +5,7 @@ import io.camunda.zeebe.protocol.record.RecordType;
 import io.camunda.zeebe.protocol.record.ValueType;
 import io.camunda.zeebe.protocol.record.value.TenantOwned;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,7 +35,9 @@ public final class RecordFilter implements Context.RecordFilter {
             .collect(Collectors.toList());
 
     final List<String> enabledTenantList = parseAsList(config.getEnabledTenants());
-    enabledTenants = enabledTenantList;
+    enabledTenants = enabledTenantList.isEmpty() 
+        ? Collections.singletonList(TenantOwned.DEFAULT_TENANT_IDENTIFIER)
+        : enabledTenantList;
   }
 
   private List<String> parseAsList(String list) {
@@ -55,10 +58,7 @@ public final class RecordFilter implements Context.RecordFilter {
   }
 
   public boolean acceptTenant(TenantOwned tenantOwnedRecord) {
-    if (tenantOwnedRecord == null) {
-      return false;
-    }
     final String tenantId = tenantOwnedRecord.getTenantId();
-    return enabledTenants.isEmpty() || enabledTenants.contains(tenantId);
+    return enabledTenants.contains(tenantId);
   }
 }

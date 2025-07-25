@@ -71,6 +71,7 @@ public class RedisExporter implements Exporter {
     streamPrefix = config.getStreamPrefix();
 
     final RecordFilter filter = new RecordFilter(config);
+    this.recordFilter = filter;
     context.setFilter(filter);
 
     configureFormat();
