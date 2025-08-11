@@ -12,6 +12,9 @@ public class ExporterConfiguration {
 
   private String enabledValueTypes = "";
   private String enabledRecordTypes = "";
+  private String enabledTenants = "";
+
+  private boolean enableTenantStreams = false;
 
   private String name = "zeebe";
 
@@ -100,6 +103,14 @@ public class ExporterConfiguration {
     return getEnv("ENABLED_RECORD_TYPES").orElse(enabledRecordTypes);
   }
 
+  public String getEnabledTenants() {
+    return getEnv("ENABLED_TENANTS").orElse(enabledTenants);
+  }
+
+  public boolean isEnableTenantStreams() {
+    return getEnv("ENABLE_TENANT_STREAMS").map(Boolean::parseBoolean).orElse(enableTenantStreams);
+  }
+
   public String getName() {
     return getEnv("NAME").orElse(name);
   }
@@ -138,6 +149,11 @@ public class ExporterConfiguration {
         + ", enabledRecordTypes='"
         + getEnabledRecordTypes()
         + '\''
+        + ", enabledTenants='"
+        + getEnabledTenants()
+        + '\''
+        + ", enableTenantStreams="
+        + isEnableTenantStreams()
         + ", format='"
         + getFormat()
         + '\''
@@ -156,6 +172,8 @@ public class ExporterConfiguration {
         + getConsumerJobTimeoutInSeconds()
         + ", consumerIdleTimeoutInSeconds="
         + getConsumerIdleTimeoutInSeconds()
+        + ", keyScanCycleInSeconds="
+        + getKeyScanCycleInSeconds()
         + ", ioThreadPoolSize="
         + getIoThreadPoolSize()
         + ", batchSize="
